@@ -1,0 +1,26 @@
+#define TREETOKEN_ENDLABEL       0
+#define TREETOKEN_TEXT           1
+#define TREETOKEN_WHITESPACE     2
+
+#define TREETOKEN_POSINT         3
+#define TREETOKEN_NEGINT         4
+/*
+#define TREETOKEN_POSINT16       4
+#define TREETOKEN_POSINT32       5
+#define TREETOKEN_NEGINT8        6
+#define TREETOKEN_NEGINT16       7
+#define TREETOKEN_NEGINT32       8
+*/
+#define TREETOKEN_CHAR1          9
+#define TREETOKEN_CHAR2          10
+#define TREETOKEN_CHAR3          11
+#define TREETOKEN_CHAR4          12
+
+#define TREETOKEN_DIRECTCHAR1    13
+#define TREETOKEN_DIRECTCHAR2    14
+#define TREETOKEN_DIRECTCHAR3    14
+
+#define TREETOKEN_FULLLABEL      15
+#define TREETOKEN_FULLATTRIB     16
+
+#define TREETOKEN_LABELIDX_OFFS  20
