@@ -41,13 +41,14 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories=""
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				DebugInformationFormat="4"
+				DebugInformationFormat="1"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -165,58 +166,6 @@
 	<References>
 	</References>
 	<Files>
-		<Filter
-			Name="bzlib"
-			>
-			<File
-				RelativePath=".\bzlib\blocksort.c"
-				>
-			</File>
-			<File
-				RelativePath=".\bzlib\bzip2.c"
-				>
-			</File>
-			<File
-				RelativePath=".\bzlib\bzip2recover.c"
-				>
-			</File>
-			<File
-				RelativePath=".\bzlib\bzlib.c"
-				>
-			</File>
-			<File
-				RelativePath=".\bzlib\bzlib.h"
-				>
-			</File>
-			<File
-				RelativePath=".\bzlib\bzlib_private.h"
-				>
-			</File>
-			<File
-				RelativePath=".\bzlib\compress.c"
-				>
-			</File>
-			<File
-				RelativePath=".\bzlib\crctable.c"
-				>
-			</File>
-			<File
-				RelativePath=".\bzlib\decompress.c"
-				>
-			</File>
-			<File
-				RelativePath=".\bzlib\dlltest.c"
-				>
-			</File>
-			<File
-				RelativePath=".\bzlib\huffman.c"
-				>
-			</File>
-			<File
-				RelativePath=".\bzlib\randtable.c"
-				>
-			</File>
-		</Filter>
 		<Filter
 			Name="src"
 			>
@@ -446,10 +395,6 @@
 			</File>
 			<File
 				RelativePath=".\zlib\deflate.h"
-				>
-			</File>
-			<File
-				RelativePath=".\zlib\example.c"
 				>
 			</File>
 			<File

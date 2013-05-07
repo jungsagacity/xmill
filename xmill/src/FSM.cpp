@@ -32,9 +32,9 @@ History:
 
 #include <stdio.h>
 
-#include "src/LabelDict.hpp"
-#include "src/FSM.hpp"
-#include "src/Load.hpp"
+#include "../src/LabelDict.hpp"
+#include "../src/FSM.hpp"
+#include "../src/Load.hpp"
 
 //#include "Load.hpp"
 

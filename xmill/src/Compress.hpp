@@ -35,11 +35,8 @@ History:
 #ifndef COMPRESS_HPP
 #define COMPRESS_HPP
 
-#ifdef USE_BZIP
-#include <bzlib.h>
-#else
-#include <zlib.h>
-#endif
+#include "../zlib/zlib.h"
+
 
 class Output;
 class MemStreamer;
@@ -49,7 +46,7 @@ class Input;
 
 // The Compressor
 
-#ifdef XMILL
+
 
 class Compressor
 {
@@ -76,13 +73,13 @@ public:
       // Finishes the compression and stores the input data size and
       // the output data size in 'uncompressedsize' and 'compressedsize'
 };
-#endif
+
 
 //************************************************************************
 
 // The Decompressor
 
-#ifdef XDEMILL
+
 
 class Uncompressor
 {
@@ -108,6 +105,6 @@ public:
       // The function returns 1, if output buffer is full and
       // there is more data to read. Otherwise, the function returns 0.
 };
-#endif
+
 
 #endif

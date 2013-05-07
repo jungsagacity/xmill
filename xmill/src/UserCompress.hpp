@@ -37,21 +37,21 @@ class CompressMan;
 
 #include "MemStreamer.hpp"
 
-#ifdef XMILL
+
 #include "ContMan.hpp"
 
 class UserCompressor;
 class CompressContainer;
-#endif
 
 
-#ifdef XDEMILL
+
+
 #include "XMLOutput.hpp"
 
 class UserUncompressor;
 class Input;
 class SmallBlockUncompressor;
-#endif
+
 
 extern MemStreamer mainmem;
 
@@ -71,21 +71,20 @@ class UserCompressorFactory
    virtual char *GetDescription()=0;
       // Should return a single-line (without '\n') description of the compressor
 
-#ifdef XMILL
+
    virtual UserCompressor   *InstantiateCompressor(char *paramstr,int len)=0;
       // Instantiates the Compressor for specific parameters
-#endif
-#ifdef XDEMILL
+
    virtual UserUncompressor *InstantiateUncompressor(char *paramstr,int len)=0;
       // Instantiates the Decompressor for specific parameters
-#endif
+
 
    // CompressFactories are also allowed to store status information
    // in the compressed file! The following procedure as used for
    // compressing/decompressing this information
    // Small data (<2KBytes) is stored in the header, while
    // lare data is stored in separate zlib-blocks in the output file
-#ifdef XMILL
+
    virtual void CompressSmallGlobalData(Compressor *compressor)  {}
    virtual void CompressLargeGlobalData(Output *output)  {}
 
@@ -94,14 +93,14 @@ class UserCompressorFactory
       // needs. This number is stored in the compressed file and
       // later used in the decompressor to allocate the right amount
       // of memory
-#endif
+
    // Similarly, the user compressor factory on the decompressor site
    // is able to decompress the data from the input file
-#ifdef XDEMILL
+
    virtual void UncompressSmallGlobalData(SmallBlockUncompressor *uncompressor)  {}
    virtual void UncompressLargeGlobalData(Input *input)  {}
    virtual void FinishUncompress()  {}
-#endif
+
 public:
    UserCompressorFactory();
 };
@@ -111,7 +110,7 @@ public:
 
 // THe definition of the user compressor class follows
 
-#ifdef XMILL
+
 
 class UserCompressor
 {
@@ -172,11 +171,11 @@ public:
       // the data
 };
 
-#endif
+
 
 //***************************************************************************
 
-#ifdef XDEMILL
+
 
 class UncompressContainer;
 
@@ -209,7 +208,7 @@ public:
       // Finished the decompression
 };
 
-#endif
+
 
 //*************************************************************************
 //*************************************************************************

@@ -30,7 +30,7 @@ History:
 
 // This module contains the container manager for the compressor XMill
 
-#ifdef XMILL
+
 
 #include "ContMan.hpp"
 #include "Output.hpp"
@@ -383,4 +383,4 @@ CompressContainerBlock *CompressContainerMan::CreateNewContainerBlock(unsigned c
    return block;
 }
 
-#endif
+

@@ -33,7 +33,7 @@ History:
 #ifndef CONTMAN_HPP
 #define CONTMAN_HPP
 
-#ifdef XMILL
+
 
 #include "MemStreamer.hpp"
 #include "Compress.hpp"
@@ -188,6 +188,6 @@ extern CompressContainer      *globaltreecont;
 extern CompressContainer      *globalwhitespacecont;
 extern CompressContainer      *globalspecialcont;
 
-#endif
+
 
 #endif

@@ -64,7 +64,7 @@ inline void UncompressContainerBlock::Load(SmallBlockUncompressor *uncompressor)
    // Let's load the number of containers
    contnum=uncompressor->LoadUInt32();
 
-   if((pathexpr!=NULL)&&(pathexpr->GetUserContNum()!=contnum))
+   if((pathexpr!=NULL)&&(pathexpr->UnGetUserContNum()!=contnum))
    {
       Error("Corrupt compressed file !");
       Exit();
@@ -74,7 +74,7 @@ inline void UncompressContainerBlock::Load(SmallBlockUncompressor *uncompressor)
    // and the necessary state space
    contarray=(UncompressContainer *)blockmem.GetByteBlock(
       sizeof(UncompressContainer)*contnum+
-      ((pathexpr!=NULL) ? pathexpr->GetUserDataSize() : 0));
+      ((pathexpr!=NULL) ? pathexpr->UnGetUserDataSize() : 0));
    
    // let's load the size of each single container
    for(unsigned i=0;i<contnum;i++)

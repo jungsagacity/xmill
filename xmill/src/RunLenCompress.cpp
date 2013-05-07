@@ -32,9 +32,9 @@ History:
 
 #include "CompressMan.hpp"
 
-#ifdef XDEMILL
+
 #include "UnCompCont.hpp"
-#endif
+
 
 //***************************************************************************
 //***************************************************************************
@@ -75,9 +75,9 @@ struct CurRunLengthState
       CurRunLengthItem  **itemref;
       unsigned          allocsize;
 
-#ifdef XMILL
+
       runlencount=0;
-#endif
+
 
       totallen=len;
 
@@ -131,7 +131,7 @@ struct CurRunLengthState
    }
 };
 
-#ifdef XMILL
+
 
 class RunLengthCompressor : public UserCompressor
 {
@@ -234,13 +234,13 @@ public:
    }
 };
 
-#endif
+
 
 //****************************************************************************************
 
 // The decompressor for run length encoder
 
-#ifdef XDEMILL
+
 
 class RunLengthUncompressor : public UserUncompressor
 {
@@ -295,7 +295,7 @@ public:
    }
 };
 
-#endif
+
 
 //****************************************************************************************
 
@@ -303,15 +303,15 @@ public:
 
 class RunLengthCompressorFactory : public UserCompressorFactory
 {
-#ifdef XDEMILL
+
    RunLengthUncompressor uncompressor;
-#endif
+
 
 public:
    char *GetName()         {  return "rl"; }
    char *GetDescription()  {  return "Run-length encoder for arbitrary text strings"; }
 
-#ifdef XMILL
+
    UserCompressor *InstantiateCompressor(char *paramstr,int len)
    {
       if(paramstr!=NULL)
@@ -323,14 +323,12 @@ public:
       }
       return new RunLengthCompressor();
    }
-#endif
 
-#ifdef XDEMILL
    UserUncompressor *InstantiateUncompressor(char *paramstr,int len)
    {
       return &uncompressor;
    }
-#endif
+
 };
 
 RunLengthCompressorFactory  runlengthcompressor;

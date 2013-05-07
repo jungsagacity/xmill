@@ -36,7 +36,7 @@ History:
 #include "Types.hpp"
 #include "MemStreamer.hpp"
 
-//#define FSM_NEGATE    // Enables Negation of FSMs
+#define FSM_NEGATE    // Enables Negation of FSMs
 //#define FSM_PRINT     // Enables Print-functions for FSMs
 //#define FSM_STORE     // Enables Store/Load functions for FSMs
 

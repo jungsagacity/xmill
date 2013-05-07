@@ -42,11 +42,9 @@ History:
 // I.e. all new strings are represented in the same hash tableindex number space !
 
 #include "CompressMan.hpp"
-
-#ifdef XDEMILL
 #include "UnCompCont.hpp"
 #include "SmallUncompress.hpp"
-#endif
+
 
 extern MemStreamer blockmem;
 
@@ -62,7 +60,7 @@ extern MemStreamer blockmem;
 
 // The compressor is based on a hash table implementation
 
-#ifdef XMILL
+
 
 // The size of the hash table
 #define ENUMHASHTABLE_SIZE  32768
@@ -300,7 +298,7 @@ public:
    }
 };
 
-#endif // XMILL
+
 
 //**************************************************************************
 //**************************************************************************
@@ -316,7 +314,7 @@ struct EnumDictItem
    unsigned char  *dataptr;
 };
 
-#ifdef XDEMILL
+
 
 struct EnumUncompressState
    // The state of the decompressor
@@ -363,7 +361,7 @@ public:
 };
 
 
-#endif
+
 
 //**************************************************************************
 
@@ -373,15 +371,15 @@ class EnumerationCompressorFactory : public UserCompressorFactory
    unsigned                   enuminstancecount;   // The number of enum compressor instantiations
 
    // **** Additional information for the compressor
-#ifdef XMILL
+
    EnumerationCompressor      enumcompress;     // We need only one compressor instance
    
    EnumCompressState          *enumstatelist,   // The global list of enumstates
                               **lastenumstateref;
-#endif
+
 
    // **** Additional information for the decompressor
-#ifdef XDEMILL
+
    EnumerationUncompressor    enumuncompress;   // We need only one decompressor instance
 
    // We keep a temporary array of states for the decompressors
@@ -390,21 +388,21 @@ class EnumerationCompressorFactory : public UserCompressorFactory
    // initialized with these states
    EnumUncompressState        *enumuncompressstates;        
    unsigned long              activeenumuncompressstates;   // The number of states in the array
-#endif
+
 
 public:
    EnumerationCompressorFactory()
    {
       enuminstancecount=0;
 
-#ifdef XMILL
+
       enumstatelist=NULL;
       lastenumstateref=&enumstatelist;
-#endif
 
-#ifdef XDEMILL
+
+
       activeenumuncompressstates=0;
-#endif
+
    }
 
    char *GetName()         {  return "e"; }
@@ -413,7 +411,7 @@ public:
    char CanOverlap()       {  return 1;   }
 
    // ******* For the compressor **************
-#ifdef XMILL
+
 
    void AddEnumCompressState(EnumCompressState *state)
       // Adds a new enumstate to the global list
@@ -436,17 +434,17 @@ public:
       }
       return &enumcompress;
    }
-#endif
+
 
    // ******* For the decompressor **************
 
-#ifdef XDEMILL
+
    UserUncompressor *InstantiateUncompressor(char *paramstr,int len)
       // The instantiation simply return the one instance we have
    {
       return &enumuncompress;
    }
-#endif
+
 
    // The compression/decompression routines for the factory
    // CompressFactoriess are also allowed to store status information
@@ -455,7 +453,7 @@ public:
    // Small data (<1024Bytes) is stored in the header, while
    // lare data is stored in separate zlib-blocks in the output file
 
-#ifdef XMILL
+
    void CompressSmallGlobalData(Compressor *compressor)
       // Compresses the small data
    {
@@ -545,12 +543,12 @@ public:
       }
       return size;
    }
-#endif
+
 
 //*************************************************************************
 //*************************************************************************
 
-#ifdef XDEMILL
+
    void UncompressSmallGlobalData(SmallBlockUncompressor *uncompressor)
    {
       MemStreamer       headmem;
@@ -689,21 +687,21 @@ public:
          FreeMemBlock(enumuncompressstates[i].itemarray,sizeof(EnumDictItem)*enumuncompressstates[i].itemnum);
       }
    }
-#endif
+
 };
 
 EnumerationCompressorFactory  enumcompressfactory;
 
-#ifdef XMILL
+
 void AddEnumCompressState(EnumCompressState *state)
 {
    enumcompressfactory.AddEnumCompressState(state);
 }
-#endif
 
-#ifdef XDEMILL
+
+
 EnumUncompressState *EnumerationUncompressor::GetNextPossibleEnumUnCompressState()
 {
    return enumcompressfactory.GetNextPossibleEnumUnCompressState();
 }
-#endif
+

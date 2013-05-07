@@ -60,7 +60,7 @@ public:
    void AddCompressFactory(UserCompressorFactory *compressor);
       // Adds a new user compressor factory
 
-#ifdef XMILL   
+  
    UserCompressor *CreateCompressorInstance(char * &compressorname,char *endptr);
       // Finds a specific user compressor factory that is specified by
       // 'compressorname' (the length is given by 'endptr-compressorname')
@@ -68,8 +68,8 @@ public:
       // the 'compressorname' is set to the next character following the
       // compressor name.
 
-#endif
-#ifdef XDEMILL
+
+
    UserUncompressor *CreateUncompressorInstance(char * &compressorname,char *endptr);
       // Finds a specific user decompressor factory that is specified by
       // 'compressorname' (the length is given by 'endptr-compressorname')
@@ -77,12 +77,12 @@ public:
       // the 'compressorname' is set to the next character following the
       // compressor name.
 
-#endif
+
    UserCompressorFactory *FindCompressorFactory(char *name,int len);
       // Finds a certain user compressor factory with a given name
       // If it doesn't find such a compressor, we exit
 
-#ifdef XMILL
+
    void PrintCompressorInfo();
       // Prints information about the compressors
 
@@ -98,9 +98,9 @@ public:
       // Stores own data (only the large pieces!) of the user compressor factories
       // in the output stream described by 'compressor'.
 
-#endif
 
-#ifdef XDEMILL
+
+
    void UncompressSmallGlobalData(SmallBlockUncompressor *uncompressor);
       // Reads the own (small) data from the source described by 'uncompressor' and
       // initializes the user compressor factories.
@@ -113,7 +113,7 @@ public:
       // This is called after all user compressor data has been decompressed
 
    void DebugPrint();
-#endif
+
 };
 
 // The actual user compressor manager

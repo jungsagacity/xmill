@@ -127,7 +127,7 @@ extern UserCompressorFactory *constantcompressfactoryptr;
 
 //**********************************************************************
 
-#ifdef XMILL
+
 
 UserCompressor *CompressMan::CreateCompressorInstance(char * &compressorname,char *endptr)
    // Finds a specific user compressor factory that is specified by
@@ -184,11 +184,11 @@ UserCompressor *CompressMan::CreateCompressorInstance(char * &compressorname,cha
       return compressor->InstantiateCompressor(NULL,0);
    }
 }
-#endif
+
 
 //**********************************************************************
 
-#ifdef XDEMILL
+
 UserUncompressor *CompressMan::CreateUncompressorInstance(char * &compressorname,char *endptr)
    // Finds a specific user decompressor factory that is specified by
    // 'compressorname' (the length is given by 'endptr-compressorname')
@@ -245,7 +245,7 @@ UserUncompressor *CompressMan::CreateUncompressorInstance(char * &compressorname
       return compressor->InstantiateUncompressor(NULL,0);
    }
 }
-#endif
+
 
 UserCompressorFactory *CompressMan::FindCompressorFactory(char *name,int len)
    // Finds a certain user compressor factory with a given name
@@ -271,7 +271,7 @@ UserCompressorFactory *CompressMan::FindCompressorFactory(char *name,int len)
 
 //**********************************************************************
 
-#ifdef XMILL
+
 
 void CompressMan::PrintCompressorInfo()
    // Prints information about the compressors
@@ -356,11 +356,11 @@ void CompressMan::CompressLargeGlobalData(Output *output)
    }
 }
 
-#endif
+
 
 //**********************************************************************
 
-#ifdef XDEMILL
+
 
 void CompressMan::UncompressSmallGlobalData(SmallBlockUncompressor *uncompressor)
    // Reads the own (small) data from the source described by 'uncompressor' and
@@ -418,4 +418,4 @@ void CompressMan::DebugPrint()
    }
 }
 
-#endif
+

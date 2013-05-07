@@ -39,9 +39,9 @@ History:
 
 #include "CompressMan.hpp"
 
-#ifdef XDEMILL
+
 #include "UnCompCont.hpp"
-#endif
+
 
 class RepeatSepCompressorFactory;
 
@@ -50,20 +50,17 @@ class RepeatSepCompressorFactory;
 struct RepeatSepCompressorInfo
 {
    union{
-#ifdef XMILL
+
       UserCompressor       *subcompressor;
-#endif
-#ifdef XDEMILL
+
       UserUncompressor     *subuncompressor;
-#endif
+
    };
    union{
-#ifdef XMILL
+
       UserCompressor       *subcompressor2;
-#endif
-#ifdef XDEMILL
       UserUncompressor     *subuncompressor2;
-#endif
+
    };
 
    // The delimiter
@@ -110,7 +107,7 @@ struct RepeatSepCompressorInfo
       }
 
       // Next, there must be the compressor as a parameter
-#ifdef XMILL
+
       subcompressor2=NULL;
       subcompressor=compressman.CreateCompressorInstance(endstringptr,endptr);
 
@@ -121,11 +118,10 @@ struct RepeatSepCompressorInfo
          ErrorCont("' must always accept the string!\n");
          Exit();
       }
-#endif
-#ifdef XDEMILL
+
       subuncompressor2=NULL;
       subuncompressor=compressman.CreateUncompressorInstance(endstringptr,endptr);
-#endif
+
       // Skip white spaces
       while(endstringptr<endptr)
       {
@@ -140,12 +136,11 @@ struct RepeatSepCompressorInfo
          return;
 
       // Otherwise find the tail compressor
-#ifdef XMILL
+
       subcompressor2=compressman.CreateCompressorInstance(endstringptr,endptr);
-#endif
-#ifdef XDEMILL
+
       subuncompressor2=compressman.CreateUncompressorInstance(endstringptr,endptr);
-#endif
+
 
       // Skip white spaces
       while(endstringptr<endptr)
@@ -170,7 +165,6 @@ struct RepeatSepCompressorInfo
 
 // The repeat compressor compressor
 
-#ifdef XMILL
 
 class RepeatSepCompressor : public UserCompressor
 {
@@ -336,9 +330,7 @@ public:
             overalluncomprsize,overallcomprsize);
    }
 };
-#endif
 
-#ifdef XDEMILL
 
 class RepeatSepUncompressor : public UserUncompressor
 {
@@ -390,7 +382,7 @@ public:
    }
 };
 
-#endif
+
 
 class RepeatSepCompressorFactory : public UserCompressorFactory
 {
@@ -398,7 +390,7 @@ public:
    char *GetName()         {  return "rep"; }
    char *GetDescription()  {  return "Compressor for substrings separated by some delimiter string"; }
 
-#ifdef XMILL
+
    UserCompressor *InstantiateCompressor(char *paramstr,int len)
    {
       if(paramstr==NULL)
@@ -414,9 +406,7 @@ public:
 
       return repeatcompressor;
    }
-#endif
 
-#ifdef XDEMILL
    UserUncompressor *InstantiateUncompressor(char *paramstr,int len)
    {
       RepeatSepUncompressor  *repeatuncompressor=new RepeatSepUncompressor();
@@ -426,7 +416,7 @@ public:
 
       return repeatuncompressor;
    }
-#endif
+
 };
 
 RepeatSepCompressorFactory  repeatsepcompressfactory;

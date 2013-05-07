@@ -48,14 +48,14 @@ class VPathExpr
 
    VPathExpr      *next;   // The next container path expression in the path manager
 
-#ifdef XMILL
+
 
    // For forward dataguides, we also keep the forward FSM
 #ifdef USE_FORWARD_DATAGUIDE
    FSM            *forwardfsm;   // The forward FSM
 #endif
    FSM            *reversefsm;   // The reverse FSM
-#endif
+
 
    // We also keep the original path expression string
    char           *regexprstr,*regexprendptr,   // The entire string
@@ -71,12 +71,12 @@ class VPathExpr
 //   unsigned long  compresscontnum:10;        // Number of containers that are needed by the compressor
 //   unsigned long  compressuserdatasize:10;   // Number of containers that are needed by the compressor
 
-#ifdef XMILL
+
    UserCompressor    *usercompressor;     // The user compressor
-#endif
-#ifdef XDEMILL
+
+
    UserUncompressor  *useruncompressor;   // The user decompressor
-#endif
+
 
    void HandlePathExprOption(char * &str,char *endptr);
       // Parses the specific path expression option and constructs the user compressor object
@@ -111,14 +111,14 @@ public:
 
    VPathExpr()
    {
-#ifdef XMILL
+
 
 #ifdef USE_FORWARD_DATAGUIDE
       forwardfsm=NULL;
 #endif
       reversefsm=NULL;
       next=NULL;
-#endif
+
    }
 
    void CreateFromString(char * &str,char *endptr);
@@ -132,7 +132,7 @@ public:
    unsigned long GetIdx()  {  return idx; }
    VPathExpr *GetNext() {  return next;   }
 
-#ifdef XMILL
+
    FSMState *GetReverseFSMStartState() {  return reversefsm->GetStartState();}
 #ifdef USE_FORWARD_DATAGUIDE
    FSMState *GetForwardFSMStartState() {  return forwardfsm->GetStartState();}
@@ -140,24 +140,24 @@ public:
 
    void Store(MemStreamer *output);    // Stores the FSM
       // Stores the path expression in 'output'
-#endif
 
-#ifdef XDEMILL
+
+
    void Load(SmallBlockUncompressor *uncompressor);
       // Loads the user compressor string from 'uncompress'
       // It parses the user compressor string and creates the corresponding user compressor
-#endif
 
-#ifdef XMILL
+
+
    unsigned long GetUserContNum()   {  return usercompressor->GetUserContNum(); }
    unsigned long GetUserDataSize()  {  return usercompressor->GetUserDataSize();  }
-#endif
-#ifdef XDEMILL
-   unsigned long GetUserContNum()   {  return useruncompressor->GetUserContNum(); }
-   unsigned long GetUserDataSize()  {  return useruncompressor->GetUserDataSize();  }
-#endif
 
-#ifdef XMILL
+
+   unsigned long UnGetUserContNum()   {  return useruncompressor->GetUserContNum(); }
+   unsigned long UnGetUserDataSize()  {  return useruncompressor->GetUserDataSize();  }
+
+
+
    void InitCompress(CompressContainer *cont,char *dataptr)
    {
       usercompressor->InitCompress(cont,dataptr);
@@ -179,14 +179,14 @@ public:
       return usercompressor;
    }
    
-#endif
 
-#ifdef XDEMILL
+
+
    UserUncompressor *GetUserUncompressor()
    {
       return useruncompressor;
    }
-#endif
+
 };
 
 
@@ -219,18 +219,16 @@ public:
          curpathexpr=curpathexpr->next;
       return curpathexpr;
    }
-#ifdef XMILL
+
    void AddNewVPathExpr(char * &str,char *endptr);
       // Adds a new path expression to the set of paths
 
    void Store(MemStreamer *memstream);
       // Stores all path expressions
-#endif
 
-#ifdef XDEMILL
    void Load(SmallBlockUncompressor *uncompressor);
       // Load the set of path expressions from 'uncompressor'
-#endif
+
 
    VPathExpr *GetVPathExprs() {  return pathexprs; }
 
@@ -242,7 +240,7 @@ public:
       // habe been inserted
 };
 
-#ifdef XMILL
+
 
 class PathDictNode;
 
@@ -274,6 +272,6 @@ public:
    }
 };
 
-#endif
+
 
 #endif

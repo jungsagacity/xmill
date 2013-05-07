@@ -43,19 +43,16 @@ History:
 #include "MemStreamer.hpp"
 #include "Load.hpp"
 
-#ifdef XMILL
-#include "Compress.hpp"
-#endif
 
-#ifdef XDEMILL
+#include "Compress.hpp"
 #include "SmallUncompress.hpp"
-#endif
+
 
 #define ISATTRIB(labelid)  (((labelid)&ATTRIBLABEL_STARTIDX)?1:0)
 
 extern MemStreamer mainmem;
 
-#ifdef XMILL
+
 
 // For the compressor, the dictionary is implemented as a hash table,
 // since we need to look up the ID for a given name
@@ -86,11 +83,11 @@ struct CompressLabelDictItem
    unsigned short GetLabelLen()  {  return len; }
       // Returns the label length
 };
-#endif
+
 
 //******************************************************************************
 
-#ifdef XDEMILL
+
 
 // For the decompressor, the label dictionary is implemented through a
 // lookup table. New entries can be added through the decompressor runs
@@ -117,7 +114,7 @@ struct UncompressLabelDict
       return (UncompressLabelDictItem *)(this+1);
    }
 };
-#endif
+
 
 //******************************************************************************
 
@@ -126,7 +123,7 @@ class LabelDict
 {
    TLabelID                   labelnum;            // The number of labels
 
-#ifdef XMILL
+
    TLabelID                   predefinedlabelnum; 
       // The number of labels predefined through the FSMs
       // Those labels will *not* be deleted in a Reset() invocation
@@ -138,12 +135,12 @@ class LabelDict
    // in the compressed file - i.e. in a previous run
    TLabelID                   savedlabelnum;    
    CompressLabelDictItem      **savedlabelref;
-#endif
 
-#ifdef XDEMILL
+
+
    UncompressLabelDict        *labeldictlist;      // The list of label groups
    UncompressLabelDict        *lastlabeldict;      // The last label group
-#endif
+
 
 public:
 #ifdef PROFILE
@@ -159,7 +156,7 @@ public:
 
       labelnum=0;
 
-#ifdef XMILL
+
       // No labels
       labels=NULL;
       labelref=&labels;
@@ -177,17 +174,17 @@ public:
 
       for(int i=0;i<HASHTABLE_SIZE;i++)
          hashtable[i]=NULL;
-#endif
-#ifdef XDEMILL
+
+
       // No labels until now
       labeldictlist=NULL;
       lastlabeldict=NULL;
-#endif
+
    }
 
    void Reset()
    {  
-#ifdef XMILL
+
       int      i;
       TLabelID labelid;
       CompressLabelDictItem **hashtableref;
@@ -213,8 +210,8 @@ public:
       // We keep the first 'predefinedlabelnum' predefined labels.
       CompressLabelDictItem **curlabelref=&labels;
 
-      for(labelid=0;labelid<predefinedlabelnum;labelid++)
-         curlabelref=&((*curlabelref)->next);
+      //for(labelid=0;labelid<predefinedlabelnum;labelid++)//--commented by wujun 2013.5.6 
+      //   curlabelref=&((*curlabelref)->next);
 
       *curlabelref=NULL;
 
@@ -224,26 +221,26 @@ public:
       // no saved labels until now
       savedlabelnum=0;
       savedlabelref=&labels;
-#endif
-#ifdef XDEMILL
+
+
       // No labels until now
       labelnum=0;
       labeldictlist=NULL;
       lastlabeldict=NULL;
-#endif
+
    }
-#ifdef XMILL
+
    void FinishedPredefinedLabels()
       // Finished the creation of predefined labels
       // ==> We keep the number of predefined labels
    {
       predefinedlabelnum=labelnum;
    }
-#endif
+
 
 // ************** These are functions for the compressor ****************************
 
-#ifdef XMILL
+
 
    int CalcHashIdx(char *label,int len)
       // Computes the hash value for a given label name
@@ -351,13 +348,13 @@ public:
 
       savedlabelnum=labelnum;
    }
-#endif
+
 
 //**********************************************************************************
 //**********************************************************************************
 //**********************************************************************************
 
-#ifdef XDEMILL
+
 
 #define LABELDICT_MINLABELNUM 32
 
@@ -475,12 +472,12 @@ public:
       *ptr=item->strptr;
       return item->len;
    }
-#endif
+
 
 //**********************************************************************************
 //**********************************************************************************
 
-#ifdef XMILL
+
    unsigned long LookupCompressLabel(TLabelID labelid,char **ptr)
       // Finds the name of a label with a given ID in the compressor
       // In the compressor, we need to traverse the entire list
@@ -497,7 +494,7 @@ public:
       *ptr=item->GetLabelPtr();
       return item->GetLabelLen();
    }
-#endif
+
 
    void PrintLabel(TLabelID labelid)
       // Prints the label with labelid 'labelid'
@@ -508,12 +505,11 @@ public:
 
       labelid=(labelid&(ATTRIBLABEL_STARTIDX-1));
 
-#ifdef XMILL
       len=LookupCompressLabel(labelid,&ptr);
-#endif
-#ifdef XDEMILL
+
+
       len=LookupLabel(labelid,&ptr,&isattrib);
-#endif
+
 
       if(isattrib)   // Attribute names start with '@'
       {

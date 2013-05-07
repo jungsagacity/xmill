@@ -95,7 +95,7 @@ inline unsigned long GetBlockSize(unsigned char blocksizeidx)
 // is too small) and data is stored within that block
 // from the start to the end
 
-#ifdef XDEMILL
+
 
 //extern MemStreamer blockmem;
 
@@ -154,4 +154,4 @@ inline void FreeMemBlock(void *ptr,unsigned long size)
 {
 }
 
-#endif
+

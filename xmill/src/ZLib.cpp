@@ -35,20 +35,18 @@ History:
 #include <string.h>
 #include <stdlib.h>
 
-#ifdef USE_BZIP
-#include <bzlib.h>
-#else
-#include <zlib.h>
-#endif
+
+#include "..\zlib\zlib.h"
+
 
 #include "Compress.hpp"
 #include "MemStreamer.hpp"
 #include "Input.hpp"
 #include "Output.hpp"
 
-#ifdef XMILL
+
 extern unsigned char zlib_compressidx;
-#endif
+
 
 //************************************************************************
 
@@ -100,7 +98,7 @@ void zfree(void *opaque,void *ptr)
 
 // The compressor part
 
-#ifdef XMILL
+
 
 Compressor::Compressor(Output *myoutput)
    // The constructor
@@ -375,14 +373,14 @@ void Compressor::FinishCompress(unsigned long *uncompressedsize,unsigned long *c
 #endif
 }
 
-#endif // XMILL
+
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-#ifdef XDEMILL
+
 
 char Uncompressor::Uncompress(Input *input,unsigned char *dataptr,unsigned long *len)
    // Decompresses the data from 'input' and stores
@@ -503,4 +501,4 @@ char Uncompressor::Uncompress(Input *input,unsigned char *dataptr,unsigned long 
    while(1);
 }
 
-#endif // XDEMILL
+

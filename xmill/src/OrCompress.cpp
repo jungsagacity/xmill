@@ -33,20 +33,20 @@ History:
 
 #include "CompressMan.hpp"
 
-#ifdef XDEMILL
+
 #include "UnCompCont.hpp"
-#endif
+
 
 struct OrCompressorItem
    // Each parameter of the or-compressor is stored in this structur
 {
    OrCompressorItem  *next;   // Next parameter
-#ifdef XMILL
+
    UserCompressor    *usercompressor;
-#endif
-#ifdef XDEMILL
+
+
    UserUncompressor  *useruncompressor;
-#endif
+
 
    void *operator new(size_t size)  {  return mainmem.GetByteBlock(size);}
    void operator delete(void *ptr)  {}
@@ -89,12 +89,12 @@ struct OrSepCompressorInfo
 
          // For compression, we create compressors
          // For decompression, we create decompressors
-#ifdef XMILL
+
          (*curitemref)->usercompressor=compressman.CreateCompressorInstance(ptr,endptr);
-#endif
-#ifdef XDEMILL
+
+
          (*curitemref)->useruncompressor=compressman.CreateUncompressorInstance(ptr,endptr);
-#endif
+
          // Pointer 'ptr' is moved forward by the previous functions
 
          (*curitemref)->next=NULL;
@@ -106,7 +106,7 @@ struct OrSepCompressorInfo
 
 //**************************************************************************************
 
-#ifdef XMILL
+
 
 class OrSepCompressor : public UserCompressor
    // The compressor part of the Or-compressor,
@@ -260,14 +260,14 @@ public:
 
 };
 
-#endif // XMILL
+
 
 //**********************************************************************************
 //**********************************************************************************
 
 // The decompressor for the separated Or-compressor
 
-#ifdef XDEMILL
+
 
 class OrSepUncompressor : public UserUncompressor
 {
@@ -331,7 +331,7 @@ class OrSepUncompressor : public UserUncompressor
    }
 };
 
-#endif
+
 
 //**********************************************************************************
 //**********************************************************************************
@@ -343,7 +343,7 @@ public:
    char *GetName()         {  return "or"; }
    char *GetDescription()  {  return "Variant compressor"; }
 
-#ifdef XMILL
+
    UserCompressor *InstantiateCompressor(char *paramstr,int len)
       // Instantiates the Or-compressor for specific parameters
    {
@@ -361,9 +361,7 @@ public:
 
       return orsepcompressor;
    }
-#endif
 
-#ifdef XDEMILL
    UserUncompressor *InstantiateUncompressor(char *paramstr,int len)
       // Instantiates the Or-decompressor for specific parameters
    {
@@ -376,7 +374,7 @@ public:
 
       return orsepuncompressor;
    }
-#endif
+
 };
 
 // The actual Or-compressor factory

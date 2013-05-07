@@ -37,9 +37,9 @@ History:
 #include "Input.hpp"
 #include "VPathExprMan.hpp"
 
-#ifdef XDEMILL
+
 #include "XMLOutput.hpp"
-#endif
+
 
 // Determines whether CR/LF (dos) or just LF (unix) should be used
 // if the XML is printed using formatting
@@ -66,7 +66,7 @@ char overwrite_files=0; // Is 1, if the user wants to overwrite all files
 char skip_all_files=0;  // Is 1, if the user want to skip all remaining files
 
 //********** Flags for compression ************
-#ifdef XMILL
+
 // Describe the handling of left, right, and attribute white spaces
 char globalleftwhitespacescompress     =WHITESPACE_IGNORE;
 char globalrightwhitespacescompress    =WHITESPACE_IGNORE;
@@ -81,11 +81,11 @@ char ignore_pi=0;
 // The compression ratio index for the zlib library
 unsigned char zlib_compressidx=6;
 
-#endif
 
-#ifdef XDEMILL
+
+
 extern XMLOutput output;
-#endif
+
 
 // *********** Common flags
 char no_output=0;          // No output

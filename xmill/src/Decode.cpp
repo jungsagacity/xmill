@@ -1,4 +1,3 @@
-#ifdef XDEMILL
 
 #include "UnCompCont.hpp"
 #include "XMLOutput.hpp"
@@ -83,4 +82,3 @@ void DecodeTreeBlock(UncompressContainer *treecont,UncompressContainer *whitespa
    }
 }
 
-#endif

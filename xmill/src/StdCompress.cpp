@@ -36,7 +36,7 @@ History:
 
 // For decompression, we have a couple of utility functions
 
-#ifdef XDEMILL
+
 
 #include "UnCompCont.hpp"
 
@@ -109,13 +109,13 @@ inline void PrintInteger(unsigned long val,char isneg,unsigned mindigits,XMLOutp
    output->characters(ptr,len);
 }
 
-#endif
+
 
 //***************************************************************************
 
 // The simple text compressor 't'
 
-#ifdef XMILL
+
 class PlainTextCompressor : public UserCompressor
 {
 public:
@@ -130,9 +130,7 @@ public:
       cont->StoreData(str,len);
    }
 };
-#endif
 
-#ifdef XDEMILL
 class PlainTextUncompressor : public UserUncompressor
 {
 public:
@@ -148,18 +146,18 @@ public:
       output->characters((char *)cont->GetDataPtr(len),len);
    }
 };
-#endif
+
 
 class PlainTextCompressorFactory : public UserCompressorFactory
 {
-#ifdef XDEMILL
+
    PlainTextUncompressor   uncompressor;
-#endif
+
 public:
    char *GetName()         {  return "t"; }
    char *GetDescription()  {  return "Plain text compressor"; }
 
-#ifdef XMILL
+
    UserCompressor *InstantiateCompressor(char *paramstr,int len)
    {
       if(paramstr!=NULL)
@@ -171,13 +169,12 @@ public:
       }
       return new PlainTextCompressor();
    }
-#endif
-#ifdef XDEMILL
+
    UserUncompressor *InstantiateUncompressor(char *paramstr,int len)
    {
       return &uncompressor;
    }
-#endif
+
 };
 
 //***************************************************************************
@@ -185,7 +182,7 @@ public:
 
 // The simple print compressor 'p'
 
-#ifdef XMILL
+
 class PrintCompressor : public UserCompressor
 {
 public:
@@ -206,9 +203,7 @@ public:
    {
    }
 };
-#endif
 
-#ifdef XDEMILL
 class PrintUncompressor : public UserUncompressor
 {
 public:
@@ -221,33 +216,32 @@ public:
    {
    }
 };
-#endif
+
 
 class PrintCompressorFactory : public UserCompressorFactory
 {
-#ifdef XMILL
-   PrintCompressor   compressor;
-#endif
 
-#ifdef XDEMILL
+   PrintCompressor   compressor;
+
+
+
    PrintUncompressor uncompressor;
-#endif
+
 public:
    char *GetName()         {  return "p"; }
    char *GetDescription()  {  return "Print compressor"; }
 
-#ifdef XMILL
+
    UserCompressor *InstantiateCompressor(char *paramstr,int len)
    {
       return &compressor;
    }
-#endif
-#ifdef XDEMILL
+
    UserUncompressor *InstantiateUncompressor(char *paramstr,int len)
    {
       return &uncompressor;
    }
-#endif
+
 };
 
 PrintCompressorFactory printcompressor;
@@ -255,7 +249,7 @@ PrintCompressorFactory printcompressor;
 //***************************************************************************
 //***************************************************************************
 
-#ifdef XMILL
+
 char ParseUnsignedInt(char *str,int len,unsigned long *val)
    // Parses a given string as a unsigned integer
    // Returns 1 if successful, otherwise 0.
@@ -335,14 +329,14 @@ inline char ParseSignedInt(char *str,int len,long *val)
       *val=0xFFFFFFFFL-*val;
    return 1;
 }
-#endif
+
 
 //*****************************************************************************
 //*****************************************************************************
 
 // The standard integer user compressor 'u'
 
-#ifdef XMILL
+
 class UnsignedIntCompressor : public UserCompressor
 {
    unsigned long val;
@@ -368,9 +362,7 @@ public:
       cont->StoreUInt32(val);
    }
 };
-#endif
 
-#ifdef XDEMILL
 class UnsignedIntUncompressor : public UserUncompressor
 {
    unsigned long mindigits;
@@ -388,18 +380,18 @@ public:
       PrintInteger(cont->LoadUInt32(),0,mindigits,output);
    }
 };
-#endif
+
 
 class UnsignedIntCompressorFactory : public UserCompressorFactory
 {
-#ifdef XDEMILL
+
    UnsignedIntUncompressor uncompressor;
-#endif
+
 public:
    char *GetName()         {  return "u"; }
    char *GetDescription()  {  return "Compressor for unsigned integers"; }
 
-#ifdef XMILL
+
    UserCompressor *InstantiateCompressor(char *paramstr,int len)
    {
       unsigned long mindigits=0;
@@ -419,9 +411,7 @@ public:
       }
       return new UnsignedIntCompressor(mindigits);
    }
-#endif
 
-#ifdef XDEMILL
    UserUncompressor *InstantiateUncompressor(char *paramstr,int len)
    {
       unsigned long mindigits=0;
@@ -443,7 +433,7 @@ public:
       else
          return &uncompressor;
    }
-#endif
+
 };
 
 //*****************************************************************************
@@ -451,7 +441,7 @@ public:
 
 // The standard byte integer compressor 'u8'
 
-#ifdef XMILL
+
 class UnsignedInt8Compressor : public UserCompressor
 {
    unsigned long val;
@@ -479,9 +469,7 @@ public:
       cont->StoreChar((unsigned char)val);
    }
 };
-#endif
 
-#ifdef XDEMILL
 class UnsignedInt8Uncompressor : public UserUncompressor
 {
    unsigned long mindigits;
@@ -498,19 +486,19 @@ public:
       PrintInteger((unsigned long)(unsigned char)cont->LoadChar(),0,mindigits,output);
    }
 };
-#endif
+
 
 class UnsignedInt8CompressorFactory : public UserCompressorFactory
 {
-#ifdef XDEMILL
+
    UnsignedInt8Uncompressor   uncompressor;
-#endif
+
 
 public:
    char *GetName()         {  return "u8"; }
    char *GetDescription()  {  return "Compressor for integers between 0 and 255"; }
 
-#ifdef XMILL
+
    UserCompressor *InstantiateCompressor(char *paramstr,int len)
    {
       unsigned long mindigits=0;
@@ -530,9 +518,7 @@ public:
       }
       return new UnsignedInt8Compressor(mindigits);
    }
-#endif
 
-#ifdef XDEMILL
    UserUncompressor *InstantiateUncompressor(char *paramstr,int len)
    {
       unsigned long mindigits=0;
@@ -547,7 +533,7 @@ public:
       else
          return &uncompressor;
    }
-#endif
+
 };
 
 //***************************************************************************************
@@ -555,7 +541,7 @@ public:
 
 // The standard signed integer compressor 'i'
 
-#ifdef XMILL
+
 class SignedIntCompressor : public UserCompressor
 {
    unsigned long  val;
@@ -580,8 +566,7 @@ public:
       cont->StoreSInt32(isneg,val);
    }
 };
-#endif
-#ifdef XDEMILL
+
 
 class SignedIntUncompressor : public UserUncompressor
 {
@@ -602,18 +587,18 @@ public:
       PrintInteger(val,isneg,mindigits,output);
    }
 };
-#endif
+
 
 class SignedIntCompressorFactory : public UserCompressorFactory
 {
-#ifdef XDEMILL
+
    SignedIntUncompressor   uncompressor;
-#endif
+
 public:
    char *GetName()         {  return "i"; }
    char *GetDescription()  {  return "Compressor for signed integers"; }
 
-#ifdef XMILL
+
    UserCompressor *InstantiateCompressor(char *paramstr,int len)
    {
       unsigned long mindigits=0;
@@ -633,8 +618,7 @@ public:
       }
       return new SignedIntCompressor(mindigits);
    }
-#endif
-#ifdef XDEMILL
+
    UserUncompressor *InstantiateUncompressor(char *paramstr,int len)
    {
       unsigned long mindigits=0;
@@ -649,7 +633,7 @@ public:
       else
          return &uncompressor;
    }
-#endif
+
 };
 
 //***********************************************************************
@@ -663,7 +647,7 @@ struct DeltaCompressorState
    long  prevvalue;
 };
 
-#ifdef XMILL
+
 class DeltaCompressor : public UserCompressor
 {
    long  val;                 // The temporarily parsed value
@@ -709,9 +693,7 @@ public:
       state->prevvalue=val;
    }
 };
-#endif
 
-#ifdef XDEMILL
 
 class DeltaUncompressor : public UserUncompressor
 {
@@ -742,19 +724,19 @@ public:
          PrintInteger((unsigned long) state->prevvalue,0,mindigits,output);
    }
 };
-#endif
+
 
 class DeltaCompressorFactory : public UserCompressorFactory
 {
-#ifdef XDEMILL
+
    DeltaUncompressor uncompressor;
-#endif
+
 
 public:
    char *GetName()         {  return "di"; }
    char *GetDescription()  {  return "Delta compressor for signed integers"; }
 
-#ifdef XMILL
+
    UserCompressor *InstantiateCompressor(char *paramstr,int len)
    {
       unsigned long mindigits=0;
@@ -774,8 +756,7 @@ public:
       }
       return new DeltaCompressor(mindigits);
    }
-#endif
-#ifdef XDEMILL
+
    UserUncompressor *InstantiateUncompressor(char *paramstr,int len)
    {
       unsigned long mindigits=0;
@@ -790,7 +771,7 @@ public:
       else
          return &uncompressor;
    }
-#endif
+
 };
 
 //***************************************************************************
@@ -798,7 +779,7 @@ public:
 
 // The constant compressor
 
-#ifdef XMILL
+
 class ConstantCompressor : public UserCompressor
 {
    char     *constantstr;     // The constant string that the parsed string must match
@@ -837,9 +818,7 @@ public:
    {
    }
 };
-#endif
 
-#ifdef XDEMILL
 class ConstantUncompressor : public UserUncompressor
 {
    char     *constantstr;
@@ -859,7 +838,7 @@ public:
       output->characters(constantstr,constantstrlen);
    }
 };
-#endif
+
 
 class ConstantCompressorFactory : public UserCompressorFactory
 {
@@ -867,7 +846,6 @@ public:
    char *GetName()         {  return "\"...\""; }
    char *GetDescription()  {  return "Constant compressor"; }
 
-#ifdef XMILL
    UserCompressor *InstantiateCompressor(char *paramstr,int len)
    {
       if(paramstr==NULL)
@@ -884,8 +862,8 @@ public:
       }
       return new ConstantCompressor(paramstr+1,len-2);
    }
-#endif
-#ifdef XDEMILL
+
+
    UserUncompressor *InstantiateUncompressor(char *paramstr,int len)
    {
       if(paramstr==NULL)
@@ -902,7 +880,7 @@ public:
       }
       return new ConstantUncompressor(paramstr+1,len-2);
    }
-#endif
+
 };
 
 //***************************************************************************

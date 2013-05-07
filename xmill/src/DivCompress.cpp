@@ -34,21 +34,21 @@ History:
 
 #include "CompressMan.hpp"
 
-#ifdef XDEMILL
+
 #include "UnCompCont.hpp"
-#endif
+
 
 struct DivCompressorItem
    // Each subcompressor and the following delimiter string
    // are stored in a 'DivCompressorItem'
 {
    DivCompressorItem *next;               // The next subcompressor item
-#ifdef XMILL
+
    UserCompressor    *usercompressor;     // The sub compressor
-#endif
-#ifdef XDEMILL
+
+
    UserUncompressor  *useruncompressor;   // The sub decompressor
-#endif
+
 
    // The separator between subcompressors
    // This can be empty (afterseparator=NULL), if this is the last subcompressor
@@ -112,12 +112,11 @@ struct DivSepComprInfo
 
          *curitemref=new DivCompressorItem();
 
-#ifdef XMILL
          (*curitemref)->usercompressor=compressman.CreateCompressorInstance(ptr,endptr);
-#endif
-#ifdef XDEMILL
+
+
          (*curitemref)->useruncompressor=compressman.CreateUncompressorInstance(ptr,endptr);
-#endif
+
 
          (*curitemref)->next=NULL;
 
@@ -155,7 +154,7 @@ struct DivSepComprInfo
 
 class DivSepCompressorFactory;
 
-#ifdef XMILL
+
 
 class DivSepCompressor : public UserCompressor
 {
@@ -382,14 +381,13 @@ public:
    }
 };
 
-#endif // XMILL
+
 
 //************************************************************************
 //************************************************************************
 
 //** The Decompressor ********
 
-#ifdef XDEMILL
 
 class DivSepUncompressor : public UserUncompressor
 {
@@ -479,7 +477,7 @@ public:
    }
 };
 
-#endif
+
 
 //****************************************************************************
 
@@ -490,7 +488,7 @@ public:
    char *GetName()         {  return "seq"; }
    char *GetDescription()  {  return "Sequence compressor for strings with separators"; }
 
-#ifdef XMILL
+
    UserCompressor *InstantiateCompressor(char *paramstr,int len)
       // Instantiates the compressor
    {
@@ -507,9 +505,9 @@ public:
       divsepcompressor->ComputeProperties();
       return divsepcompressor;
    }
-#endif
 
-#ifdef XDEMILL
+
+
    UserUncompressor *InstantiateUncompressor(char *paramstr,int len)
       // Instantiates the decompressor
    {
@@ -520,7 +518,7 @@ public:
       divsepuncompressor->ComputeProperties();
       return divsepuncompressor;
    }
-#endif
+
 };
 
 // The actual compressor factory for the combined sequence compressor
@@ -539,7 +537,7 @@ DivSepCompressorFactory  divsepcompressfactory;
 // i.e. the overall number of containers of the 'seqcomb' compressor is
 // the *maximum* number of containers of the subcompressors.
 
-#ifdef XMILL
+
 
 class DivCombineCompressor : public DivSepCompressor
    // The compressor class is inherited from DivSepCompressor so that
@@ -645,13 +643,13 @@ public:
    }
 };
 
-#endif
+
 
 //**********************************************************************************
 
 // The combined sequence decompressor
 
-#ifdef XDEMILL
+
 
 class DivCombineUncompressor : public DivSepUncompressor
    // Note that the class is denoted from 'DivSepUncompressor' so that
@@ -734,7 +732,7 @@ public:
    }
 };
 
-#endif
+
 
 //**********************************************************************************
 
@@ -745,7 +743,7 @@ public:
    char *GetName()         {  return "seqcomb"; }
    char *GetDescription()  {  return "Combined sequence compressor for strings with separators"; }
 
-#ifdef XMILL
+
    UserCompressor *InstantiateCompressor(char *paramstr,int len)
    {
       if(paramstr==NULL)
@@ -761,9 +759,9 @@ public:
       divcombcompressor->ComputeProperties();
       return divcombcompressor;
    }
-#endif
 
-#ifdef XDEMILL
+
+
    UserUncompressor *InstantiateUncompressor(char *paramstr,int len)
    {
       DivCombineUncompressor  *divcombuncompressor=new DivCombineUncompressor();
@@ -773,7 +771,7 @@ public:
       divcombuncompressor->ComputeProperties();
       return divcombuncompressor;
    }
-#endif
+
 };
 
 // The actual compressor factory for the combined sequence compressor

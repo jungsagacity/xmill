@@ -83,11 +83,11 @@ void gz_uncompress    OF((gzFile in, FILE   *out));
 void file_compress    OF((char  *file, char *mode));
 void file_uncompress  OF((char  *file));
 
-#ifdef WIN32
-int  __cdecl main     OF((int argc, char *argv[]));
-#else
-int  main     OF((int argc, char *argv[]));
-#endif
+//#ifdef WIN32
+//int  __cdecl main     OF((int argc, char *argv[]));
+//#else
+//int  main     OF((int argc, char *argv[]));
+//#endif
 
 char dotest=0;
 char use_stdout=0;
@@ -300,73 +300,73 @@ void file_uncompress(file)
  *   -h : compress with Z_HUFFMAN_ONLY
  *   -1 to -9 : compression level
  */
-
-#ifdef WIN32
-int __cdecl main(argc, argv)
-#else
-int main(argc, argv)
-#endif
-    int argc;
-    char *argv[];
-{
-    int uncompr = 0;
-    gzFile file;
-    char outmode[20];
-	 clock_t c1,c2;
-
-    strcpy(outmode, "wb6 ");
-
-    prog = argv[0];
-    argc--, argv++;
-
-    while (argc > 0) {
-      if (strcmp(*argv, "-t") == 0)
-	dotest = 1;
-	  else
-      if (strcmp(*argv, "-c") == 0)
-	use_stdout = 1;
-      else if (strcmp(*argv, "-d") == 0)
-	uncompr = 1;
-      else if (strcmp(*argv, "-f") == 0)
-	outmode[3] = 'f';
-      else if (strcmp(*argv, "-h") == 0)
-	outmode[3] = 'h';
-      else if ((*argv)[0] == '-' && (*argv)[1] >= '1' && (*argv)[1] <= '9' &&
-	       (*argv)[2] == 0)
-	outmode[2] = (*argv)[1];
-      else
-	break;
-      argc--, argv++;
-    }
-
-		c1=clock();
-
-    if (argc == 0) {
-        SET_BINARY_MODE(stdin);
-        SET_BINARY_MODE(stdout);
-        if (uncompr) {
-            file = gzdopen(fileno(stdin), "rb");
-            if (file == NULL) error("can't gzdopen stdin");
-            gz_uncompress(file, stdout);
-        } else {
-            file = gzdopen(fileno(stdout), outmode);
-            if (file == NULL) error("can't gzdopen stdout");
-            gz_compress(stdin, file);
-        }
-    } else {
-        do {
-            if (uncompr) {
-                file_uncompress(*argv);
-            } else {
-                file_compress(*argv, outmode);
-            }
-        } while (argv++, --argc);
-    }
-
-	 c2=clock();
-
-	 printf("Time: %f\n",((float)c2-(float)c1)/(float)CLOCKS_PER_SEC);
-
-    exit(0);
-    return 0; /* to avoid warning */
-}
+//
+//#ifdef WIN32
+//int __cdecl main(argc, argv)
+//#else
+//int main(argc, argv)
+//#endif
+//    int argc;
+//    char *argv[];
+//{
+//    int uncompr = 0;
+//    gzFile file;
+//    char outmode[20];
+//	 clock_t c1,c2;
+//
+//    strcpy(outmode, "wb6 ");
+//
+//    prog = argv[0];
+//    argc--, argv++;
+//
+//    while (argc > 0) {
+//      if (strcmp(*argv, "-t") == 0)
+//	dotest = 1;
+//	  else
+//      if (strcmp(*argv, "-c") == 0)
+//	use_stdout = 1;
+//      else if (strcmp(*argv, "-d") == 0)
+//	uncompr = 1;
+//      else if (strcmp(*argv, "-f") == 0)
+//	outmode[3] = 'f';
+//      else if (strcmp(*argv, "-h") == 0)
+//	outmode[3] = 'h';
+//      else if ((*argv)[0] == '-' && (*argv)[1] >= '1' && (*argv)[1] <= '9' &&
+//	       (*argv)[2] == 0)
+//	outmode[2] = (*argv)[1];
+//      else
+//	break;
+//      argc--, argv++;
+//    }
+//
+//		c1=clock();
+//
+//    if (argc == 0) {
+//        SET_BINARY_MODE(stdin);
+//        SET_BINARY_MODE(stdout);
+//        if (uncompr) {
+//            file = gzdopen(fileno(stdin), "rb");
+//            if (file == NULL) error("can't gzdopen stdin");
+//            gz_uncompress(file, stdout);
+//        } else {
+//            file = gzdopen(fileno(stdout), outmode);
+//            if (file == NULL) error("can't gzdopen stdout");
+//            gz_compress(stdin, file);
+//        }
+//    } else {
+//        do {
+//            if (uncompr) {
+//                file_uncompress(*argv);
+//            } else {
+//                file_compress(*argv, outmode);
+//            }
+//        } while (argv++, --argc);
+//    }
+//
+//	 c2=clock();
+//
+//	 printf("Time: %f\n",((float)c2-(float)c1)/(float)CLOCKS_PER_SEC);
+//
+//    exit(0);
+//    return 0; /* to avoid warning */
+//}

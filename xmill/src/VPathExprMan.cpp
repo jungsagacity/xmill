@@ -32,17 +32,17 @@ History:
 
 #include "VPathExprMan.hpp"
 
-#ifdef XMILL
+
 #ifdef FULL_PATHEXPR
 #include "VRegExpr.hpp"
 #endif
 #include "PathTree.hpp"
 #include "ContMan.hpp"
-#endif
 
-#ifdef XDEMILL
+
+
 #include "SmallUncompress.hpp"
-#endif
+
 
 #include "Load.hpp"
 
@@ -54,12 +54,12 @@ extern MemStreamer tmpmem;
 extern char globalleftwhitespacescompress;
 extern char globalrightwhitespacescompress;
 
-#ifdef XMILL
+
 extern UserCompressor   *plaincompressorptr; // The plain compressor: 't'
 
 extern CompressContainer *globalwhitespacecont;
    // The global white space container
-#endif
+
 
 inline void VPathExpr::PathParseError(char *errmsg,char *errptr)
    // Prints an error message, if the parsing of some path expression failed.
@@ -113,12 +113,11 @@ inline void VPathExpr::HandlePathExprOption(char * &str,char *endptr)
 
    // Otherwise, it must be a compressor:
 
-#ifdef XMILL
+
    usercompressor=compressman.CreateCompressorInstance(str,endptr);
-#endif
-#ifdef XDEMILL
+
    useruncompressor=compressman.CreateUncompressorInstance(str,endptr);
-#endif
+
 }
 
 inline void VPathExpr::ParseUserCompressorString(char * &str,char *endptr)
@@ -169,7 +168,7 @@ inline void VPathExpr::ParseUserCompressorString(char * &str,char *endptr)
    }
 }
 
-#ifdef XMILL
+
 
 inline void VPathExpr::CreateXPathEdge(char *from,char *to,FSM *fsm,FSMState *fromstate,FSMState *tostate,char ignore_pounds)
    // Reads the atomic symbol betwen 'from' and 'to' and generates
@@ -519,7 +518,7 @@ void VPathExprMan::InitWhitespaceHandling()
    }
 }
 
-#endif
+
 
 void VPathExpr::PrintRegExpr()
    // Outputs the path expression string
@@ -532,7 +531,7 @@ void VPathExpr::PrintRegExpr()
 //*******************************************************************
 //*******************************************************************
 
-#ifdef XMILL
+
 void VPathExprMan::AddNewVPathExpr(char * &str,char *endptr)
    // Adds a new path expression to the set of paths
 {
@@ -554,13 +553,13 @@ void VPathExprMan::AddNewVPathExpr(char * &str,char *endptr)
       lastpathexpr=item;
    }
 }
-#endif
+
 
 //***************************************************************************************
 //***************************************************************************************
 //***************************************************************************************
 
-#ifdef XMILL
+
 inline void VPathExpr::Store(MemStreamer *output)
    // Stores the path expression in 'output'
 {
@@ -569,9 +568,9 @@ inline void VPathExpr::Store(MemStreamer *output)
    output->StoreUInt32(regexprendptr-regexprusercompressptr);
    output->StoreData(regexprusercompressptr,regexprendptr-regexprusercompressptr);
 }
-#endif
 
-#ifdef XDEMILL
+
+
 void VPathExpr::Load(SmallBlockUncompressor *uncompress)
    // Loads the user compressor string from 'uncompress'
    // It parses the user compressor string and creates the corresponding user compressor
@@ -597,12 +596,12 @@ void VPathExpr::Load(SmallBlockUncompressor *uncompress)
    // Let's parse the user compressor
    ParseUserCompressorString(str,regexprendptr);
 }
-#endif
+
 
 //************************************************************************
 //************************************************************************
 
-#ifdef XMILL
+
 void VPathExprMan::Store(MemStreamer *memstream)
    // Stores all path expressions
 {
@@ -618,9 +617,7 @@ void VPathExprMan::Store(MemStreamer *memstream)
       curpathexpr=curpathexpr->next;
    }
 }
-#endif
 
-#ifdef XDEMILL
 void VPathExprMan::Load(SmallBlockUncompressor *uncompress)
    // Load the set of path expressions from 'uncompress'
 {
@@ -642,4 +639,4 @@ void VPathExprMan::Load(SmallBlockUncompressor *uncompress)
       pathexprref=&((*pathexprref)->next);
    }
 }
-#endif
+
